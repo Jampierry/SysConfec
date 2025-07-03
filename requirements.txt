@@ -1,0 +1,12 @@
+Django>=4.2
+psycopg2-binary>=2.9  # Para PostgreSQL, se desejar migrar do SQLite
+Pillow>=9.0            # Para upload de imagens/comprovantes
+python-dotenv>=1.0     # Para variáveis de ambiente
+whitenoise>=6.0        # Para servir arquivos estáticos
+django-crispy-forms>=2.0  # Para formulários bonitos
+crispy-bootstrap5>=0.7  # Bootstrap 5 para crispy-forms
+django-widget-tweaks>=1.4 # Customização de formulários
+django-extensions>=3.2  # Utilitários para dev
+sphinx>=7.0             # Documentação automática
+markdown>=3.4           # Suporte a markdown na documentação
+# Para gráficos no frontend, use Chart.js via CDN 

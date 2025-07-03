@@ -1,0 +1,9 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2>Remover Funcionário</h2>
+<p>Tem certeza que deseja remover o funcionário <strong>{{ object.nome }}</strong>?</p>
+<form method="post">{% csrf_token %}
+    <button type="submit">Sim, remover</button>
+    <a href="{% url 'funcionarios_list' %}">Cancelar</a>
+</form>
+{% endblock %} 

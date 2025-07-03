@@ -1,0 +1,33 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<h2>Funcionários</h2>
+<a href="{% url 'funcionario_create' %}" class="btn">Novo Funcionário</a>
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th>Nome</th>
+        <th>Cargo</th>
+        <th>Salário</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Ativo</th>
+        <th>Ações</th>
+    </tr>
+    {% for funcionario in funcionarios %}
+    <tr>
+        <td>{{ funcionario.nome }}</td>
+        <td>{{ funcionario.cargo }}</td>
+        <td>{{ funcionario.salario }}</td>
+        <td>{{ funcionario.email }}</td>
+        <td>{{ funcionario.telefone }}</td>
+        <td>{{ funcionario.ativo|yesno:"Sim,Não" }}</td>
+        <td>
+            <a href="{% url 'funcionario_update' funcionario.pk %}">Editar</a> |
+            <a href="{% url 'funcionario_delete' funcionario.pk %}">Remover</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="7">Nenhum funcionário cadastrado.</td></tr>
+    {% endfor %}
+</table>
+<a href="/funcionarios/cargos/">Ver Cargos</a>
+{% endblock %} 

@@ -1,0 +1,40 @@
+# Histórico do Chat - SysConfec
+# Data: 2025-07-03 - 16:00
+
+Resumo do Projeto:
+Sistema de gestão de facção de costura (SysConfec) com as seguintes funcionalidades:
+- Cadastro de funcionários, cargos e salários
+- Gestão de ordens de produção (entrada, saída, status, quantidade, prazos)
+- Cadastro de categorias de receitas e despesas
+- Lançamento e controle financeiro (receitas/despesas)
+- Relatórios gerenciais (financeiros, operacionais, gráficos)
+- Dashboard moderno com menu lateral retrátil
+- Configurações: usuários, permissões, backup/restauração, parâmetros do sistema
+- Documentação automática e código comentado
+
+Roadmap Sênior:
+1. Modelagem dos dados (models.py de cada app)
+2. Migrações e testes iniciais
+3. CRUD básico (views, templates, urls)
+4. Sistema de autenticação e permissões
+5. Dashboard e navegação
+6. Funcionalidades avançadas (relatórios, gráficos, backup)
+7. Documentação e comentários
+8. Testes
+9. Ajustes finais e deploy
+
+Decisões e orientações:
+- Utilizar Django para backend, HTML/CSS/JS para frontend
+- Estruturar apps: funcionarios, ordens, financeiro, usuarios, configuracoes
+- Usar CBVs para CRUD, partials/templates reutilizáveis
+- Comentar regras de negócio e decisões de arquitetura
+- Versionar banco de dados e scripts de backup
+- Documentar endpoints, modelos e fluxos críticos
+
+Próximos passos:
+- Iniciar modelagem dos dados (models.py)
+- Implementar CRUD básico
+- Estruturar dashboard moderno
+- Configurar sistema de usuários e permissões
+
+Este arquivo foi gerado automaticamente para garantir o histórico do projeto SysConfec. 
