@@ -1,110 +1,66 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SysConfec - Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f4f6f8;
-        }
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 220px;
-            height: 100vh;
-            background: #22223b;
-            color: #fff;
-            transition: width 0.3s;
-            z-index: 1000;
-            overflow-x: hidden;
-        }
-        .sidebar.collapsed {
-            width: 60px;
-        }
-        .sidebar .toggle-btn {
-            position: absolute;
-            top: 10px;
-            right: -20px;
-            background: #4a4e69;
-            color: #fff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: none;
-            outline: none;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin: 60px 0 0 0;
-        }
-        .sidebar ul li {
-            padding: 18px 20px;
-            transition: background 0.2s;
-        }
-        .sidebar ul li a {
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.1em;
-        }
-        .sidebar ul li:hover {
-            background: #4a4e69;
-        }
-        .sidebar.collapsed ul li a span {
-            display: none;
-        }
-        .sidebar.collapsed ul li a {
-            justify-content: center;
-        }
-        .main-content {
-            margin-left: 220px;
-            padding: 32px;
-            transition: margin-left 0.3s;
-        }
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 60px;
-        }
-        @media (max-width: 700px) {
-            .sidebar { width: 60px; }
-            .main-content { margin-left: 60px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="sidebar" id="sidebar">
-        <button class="toggle-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
-        <ul>
-            <li><a href="/" title="Dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
-            <li><a href="/funcionarios/" title="Funcionários"><i class="fas fa-users"></i> <span>Funcionários</span></a></li>
-            <li><a href="/ordens/" title="Ordens de Produção"><i class="fas fa-industry"></i> <span>Ordens de Produção</span></a></li>
-            <li><a href="/financeiro/" title="Financeiro"><i class="fas fa-coins"></i> <span>Financeiro</span></a></li>
-            <li><a href="/usuarios/" title="Usuários"><i class="fas fa-user-cog"></i> <span>Usuários</span></a></li>
-            <li><a href="/configuracoes/" title="Configurações"><i class="fas fa-cogs"></i> <span>Configurações</span></a></li>
-        </ul>
+{% extends 'base.html' %}
+{% load static %}
+{% load format_extras %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="cards" style="display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap;">
+    <div class="card" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 24px; flex: 1 1 200px; min-width: 200px;">
+        <h3 style="margin: 0 0 8px 0; font-size: 1.1em; color: #1976d2;">Receita do mês</h3>
+        <div class="value" style="font-size: 2em; font-weight: bold;">{{ receita_mes|default:0|brl }}</div>
     </div>
-    <div class="main-content">
-        <h1>Bem-vindo ao SysConfec</h1>
-        <p>Escolha um módulo no menu lateral para começar.</p>
+    <div class="card" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 24px; flex: 1 1 200px; min-width: 200px;">
+        <h3 style="margin: 0 0 8px 0; font-size: 1.1em; color: #1976d2;">Despesas do mês</h3>
+        <div class="value" style="font-size: 2em; font-weight: bold;">{{ despesa_mes|default:0|brl }}</div>
     </div>
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
+    <div class="card" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 24px; flex: 1 1 200px; min-width: 200px;">
+        <h3 style="margin: 0 0 8px 0; font-size: 1.1em; color: #1976d2;">Ordens em andamento</h3>
+        <div class="value" style="font-size: 2em; font-weight: bold;">{{ ordens_andamento|default:0 }}</div>
+    </div>
+    <div class="card" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 24px; flex: 1 1 200px; min-width: 200px;">
+        <h3 style="margin: 0 0 8px 0; font-size: 1.1em; color: #1976d2;">Funcionários ativos</h3>
+        <div class="value" style="font-size: 2em; font-weight: bold;">{{ funcionarios_ativos|default:0 }}</div>
+    </div>
+</div>
+<div class="charts" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 24px;">
+    <h3>Resumo Financeiro</h3>
+    <canvas id="financeChart" height="80"></canvas>
+</div>
+{{ meses|json_script:"meses-data" }}
+{{ receitas_por_mes|json_script:"receitas-data" }}
+{{ despesas_por_mes|json_script:"despesas-data" }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfico dinâmico com dados do backend
+    const meses = JSON.parse(document.getElementById('meses-data').textContent);
+    const receitas = JSON.parse(document.getElementById('receitas-data').textContent);
+    const despesas = JSON.parse(document.getElementById('despesas-data').textContent);
+    const ctx = document.getElementById('financeChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: meses,
+            datasets: [
+                {
+                    label: 'Receitas',
+                    data: receitas,
+                    backgroundColor: '#1976d2',
+                },
+                {
+                    label: 'Despesas',
+                    data: despesas,
+                    backgroundColor: '#c62828',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
         }
-    </script>
-</body>
-</html> 
+    });
+</script>
+{% endblock %} 

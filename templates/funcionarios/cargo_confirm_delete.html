@@ -1,9 +1,0 @@
-{% extends 'dashboard.html' %}
-{% block content %}
-<h2>Remover Cargo</h2>
-<p>Tem certeza que deseja remover o cargo <strong>{{ object.nome }}</strong>?</p>
-<form method="post">{% csrf_token %}
-    <button type="submit">Sim, remover</button>
-    <a href="{% url 'cargos_list' %}">Cancelar</a>
-</form>
-{% endblock %} 

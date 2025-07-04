@@ -1,29 +1,28 @@
 from django.db import models
-from funcionarios.models import Funcionario
+from SysConfec_app import brl
+
+# Create your models here.
 
 class OrdemProducao(models.Model):
-    """
-    Representa uma ordem de produção na facção de costura.
-    """
     STATUS_CHOICES = [
-        ("em_andamento", "Em andamento"),
-        ("finalizada", "Finalizada"),
-        ("pendente", "Pendente"),
-        ("cancelada", "Cancelada"),
+        ('andamento', 'Em andamento'),
+        ('finalizado', 'Finalizado'),
+        ('pendente', 'Pendente'),
+        ('cancelado', 'Cancelado'),
     ]
-
-    descricao = models.CharField(max_length=200, verbose_name="Descrição")
-    data_inicio = models.DateField(verbose_name="Data de Início")
-    data_entrega = models.DateField(verbose_name="Data de Entrega Prevista")
-    quantidade = models.PositiveIntegerField(verbose_name="Quantidade a Produzir")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="em_andamento", verbose_name="Status")
-    funcionario_responsavel = models.ForeignKey(Funcionario, on_delete=models.PROTECT, related_name="ordens_responsaveis", verbose_name="Responsável")
-    data_finalizacao = models.DateField(null=True, blank=True, verbose_name="Data de Finalização")
+    referencia = models.CharField(max_length=50, unique=True)
+    produto = models.CharField(max_length=100)
+    marca = models.CharField(max_length=100)
+    data_inicio = models.DateField()
+    data_fim = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='andamento')
+    quantidade = models.PositiveIntegerField()
+    grade_p = models.PositiveIntegerField(default=0)
+    grade_m = models.PositiveIntegerField(default=0)
+    grade_g = models.PositiveIntegerField(default=0)
+    grade_gg = models.PositiveIntegerField(default=0)
+    grade_eg = models.PositiveIntegerField(default=0)
+    observacoes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Ordem #{self.id} - {self.descricao}"
-
-    class Meta:
-        verbose_name = "Ordem de Produção"
-        verbose_name_plural = "Ordens de Produção"
-        ordering = ["-data_inicio"]
+        return f"{self.referencia} - {self.produto} - {self.marca}"

@@ -1,9 +1,61 @@
-{% extends 'dashboard.html' %}
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Funcionário</h2>
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-    <a href="{% url 'funcionarios_list' %}">Cancelar</a>
-</form>
+<div class="container mt-4">
+    <h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Funcionário</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.nome.label_tag }}
+                {{ form.nome }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.cargo.label_tag }}
+                {{ form.cargo }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.salario.label_tag }}
+                {{ form.salario }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.telefone.label_tag }}
+                {{ form.telefone }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.endereco.label_tag }}
+                {{ form.endereco }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.contato_emergencia.label_tag }}
+                {{ form.contato_emergencia }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.data_admissao.label_tag }}
+                {{ form.data_admissao }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.data_demissao.label_tag }}
+                {{ form.data_demissao }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.ativo.label_tag }}
+                {{ form.ativo }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'funcionarios:list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('[name="telefone"]').mask('(00) 0 0000-0000');
+    });
+</script>
 {% endblock %} 

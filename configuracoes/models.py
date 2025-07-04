@@ -2,19 +2,10 @@ from django.db import models
 
 # Create your models here.
 
-class ConfiguracaoSistema(models.Model):
-    """
-    Armazena parâmetros e configurações gerais do sistema.
-    Exemplo: moeda padrão, notificações, parâmetros de backup, etc.
-    """
-    chave = models.CharField(max_length=50, unique=True, verbose_name="Chave de Configuração")
-    valor = models.CharField(max_length=200, verbose_name="Valor")
-    descricao = models.TextField(blank=True, verbose_name="Descrição da Configuração")
+class Parametro(models.Model):
+    chave = models.CharField(max_length=100, unique=True)
+    valor = models.CharField(max_length=255)
+    descricao = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.chave}: {self.valor}"
-
-    class Meta:
-        verbose_name = "Configuração do Sistema"
-        verbose_name_plural = "Configurações do Sistema"
-        ordering = ["chave"]
+        return self.chave

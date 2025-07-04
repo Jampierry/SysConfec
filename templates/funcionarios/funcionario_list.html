@@ -1,33 +1,60 @@
-{% extends 'dashboard.html' %}
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<h2>Funcionários</h2>
-<a href="{% url 'funcionario_create' %}" class="btn">Novo Funcionário</a>
-<table border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th>Nome</th>
-        <th>Cargo</th>
-        <th>Salário</th>
-        <th>Email</th>
-        <th>Telefone</th>
-        <th>Ativo</th>
-        <th>Ações</th>
-    </tr>
-    {% for funcionario in funcionarios %}
-    <tr>
-        <td>{{ funcionario.nome }}</td>
-        <td>{{ funcionario.cargo }}</td>
-        <td>{{ funcionario.salario }}</td>
-        <td>{{ funcionario.email }}</td>
-        <td>{{ funcionario.telefone }}</td>
-        <td>{{ funcionario.ativo|yesno:"Sim,Não" }}</td>
-        <td>
-            <a href="{% url 'funcionario_update' funcionario.pk %}">Editar</a> |
-            <a href="{% url 'funcionario_delete' funcionario.pk %}">Remover</a>
-        </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="7">Nenhum funcionário cadastrado.</td></tr>
-    {% endfor %}
-</table>
-<a href="/funcionarios/cargos/">Ver Cargos</a>
+<div class="container mt-4">
+    <h2>Funcionários</h2>
+    <a href="{% url 'funcionarios:create' %}" class="btn btn-success mb-3">Novo Funcionário</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Salário</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Contato Emergência</th>
+                <th>Data de Admissão</th>
+                <th>Data de Demissão</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for funcionario in funcionarios %}
+            <tr>
+                <td>{{ funcionario.nome }}</td>
+                <td>{{ funcionario.cargo.nome }}</td>
+                <td>R$ {{ funcionario.salario|floatformat:2 }}</td>
+                <td>{{ funcionario.telefone }}</td>
+                <td>{{ funcionario.email }}</td>
+                <td>{{ funcionario.endereco }}</td>
+                <td>{{ funcionario.contato_emergencia }}</td>
+                <td>{{ funcionario.data_admissao|date:'d/m/Y' }}</td>
+                <td>{% if funcionario.data_demissao %}{{ funcionario.data_demissao|date:'d/m/Y' }}{% else %}-{% endif %}</td>
+                <td>{% if funcionario.ativo %}<span class="badge bg-success">Ativo</span>{% else %}<span class="badge bg-danger">Inativo</span>{% endif %}</td>
+                <td>
+                    <a href="{% url 'funcionarios:update' funcionario.pk %}" class="btn btn-sm btn-primary">Editar</a>
+                    <a href="{% url 'funcionarios:delete' funcionario.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="11">Nenhum funcionário cadastrado.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if is_paginated %}
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+            {% endif %}
+            <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 {% endblock %} 
