@@ -1,0 +1,32 @@
+Resumo da conversa:
+
+O usuário está desenvolvendo um sistema Django para controle de facção de costura, com módulos para funcionários, ordens de produção, financeiro, configurações, usuários e login. O projeto foi estruturado com apps separados, templates organizados e dashboard moderno. O usuário solicitou:
+
+- Estrutura modular de apps e templates.
+- Dashboard com cards e gráficos dinâmicos.
+- CRUDs completos para todas as entidades principais.
+- Tela de login personalizada, seletor de tema, cadastro de usuário via interface.
+- Proteção de rotas por login.
+- Geração/remoção de dados fictícios via script Python e interface.
+- Filtro customizado para valores monetários no padrão brasileiro (R$ 12.500,00).
+- Menu lateral retrátil, azul, com ícones, responsivo e consistente em todas as telas, com item ativo destacado.
+
+Durante a implementação, surgiram e foram resolvidos problemas como:
+- Falta de rota para `/` (corrigido com redirecionamento para `/login/`).
+- Problemas ao rodar scripts de dados fictícios (corrigido com ajuste do `sys.path` e uso do Python do ambiente virtual).
+- Dashboard exibindo valores fixos ou não zerando corretamente (corrigido para buscar sempre do backend).
+- Filtro customizado `brl` não sendo reconhecido (corrigido criando a pasta `templatetags` em `SysConfec_app`, registrando o filtro em `format_extras.py`, adicionando o app em `INSTALLED_APPS` e usando `{% load format_extras %}` nos templates).
+- Ajuste do seletor de dados fictícios para um switch/slider moderno.
+- Garantia de que o filtro de moeda só é aplicado em valores monetários.
+- Menu lateral inicialmente não era igual em todas as telas; foi centralizado no `base.html` e padronizado.
+- O item ativo do menu não ficava destacado corretamente em subrotas; foi criado um filtro customizado `startswith` em `SysConfec_app/templatetags/menu_extras.py` para resolver.
+- O dashboard não estendia `base.html`, o que foi corrigido para garantir o mesmo menu em todas as telas.
+- Foram feitas várias melhorias visuais e de usabilidade no menu lateral, incluindo ícones, botão de retrair/expandir (máquina de costura), centralização de ícones no menu retraído e destaque do item ativo.
+
+No final, o usuário pediu:
+- Documentação completa do projeto no `README.md`.
+- Salvamento do histórico da conversa na pasta `HISTORICO_CHAT`.
+- Garantia de estrutura limpa e atualização do repositório no GitHub.
+- O assistente iniciou a documentação, tentou salvar o histórico e atualizar o repositório, mas houve um erro de comando PowerShell ao usar `&&` (o usuário já havia avisado que não aceita comandos encadeados no Windows).
+
+O sistema está agora padronizado, com menu lateral funcional e consistente, documentação atualizada, e pronto para próximos módulos ou ajustes. 
